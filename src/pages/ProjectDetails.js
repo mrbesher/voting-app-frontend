@@ -4,7 +4,6 @@ import {SmallButton} from '../components';
 
 function ProjectDetails(props) {
   const [options, setOptions] = useState(props.route.params.candidates);
-  console.log(props.route.params);
   return (
     <SafeAreaView>
       <Text>Details of {props.route.params.title}</Text>

@@ -23,7 +23,7 @@ function Projects(props) {
         setProjects(serverResponse);
       })
       .catch(serverError => {
-        console.log('error');
+        console.log('error fetching projects');
       });
   }, []);
 

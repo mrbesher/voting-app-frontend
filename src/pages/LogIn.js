@@ -56,8 +56,6 @@ function LogIn({navigation, route}) {
   }
 
   if (response && global.loggedIn) {
-    console.log(`checking response. GOT: ${response}`);
-    console.log(response);
     navigation.navigate('MainScreen');
   }
 
