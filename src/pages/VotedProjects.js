@@ -12,7 +12,7 @@ import {
 import {fakeStorage} from '../fakeStorage';
 import {project_style} from '../styles/components_styles';
 import {theme} from '../styles/theme';
-import {CircleCount, Loading, SmallButton, ProjectCard} from '../components';
+import {CircleCount, Loading, SmallButton, ProjectCard, PageHeader} from '../components';
 
 function VotedProjects({navigation}) {
   const [projects, setProjects] = useState([]);
@@ -45,7 +45,7 @@ function VotedProjects({navigation}) {
 
   return (
     <SafeAreaView style={{backgroundColor: theme.PRIMARY_COLOR, flex: 1}}>
-      <SmallButton buttonTitle="👋 Logout 👋" onSelect={handleLogoutRequest} />
+      <PageHeader onSelect={handleLogoutRequest} title="Voted" />
       <FlatList
         keyExtractor={(item, index) => index.toString()}
         data={projects}

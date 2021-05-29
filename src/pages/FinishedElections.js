@@ -12,7 +12,7 @@ import {
 import {fakeStorage} from '../fakeStorage';
 import {project_style} from '../styles/components_styles';
 import {theme} from '../styles/theme';
-import {CircleCount, Loading, SmallButton, ProjectCard} from '../components';
+import {CircleCount, Loading, SmallButton, ProjectCard, PageHeader} from '../components';
 
 function FinishedElections(props) {
   const [projects, setProjects] = useState([]);
@@ -44,7 +44,7 @@ function FinishedElections(props) {
 
   return (
     <SafeAreaView style={{backgroundColor: theme.PRIMARY_COLOR, flex: 1}}>
-      <SmallButton buttonTitle="👋 Logout 👋" onSelect={handleLogoutRequest} />
+      <PageHeader onSelect={handleLogoutRequest} title="Finished" />
       <FlatList
         keyExtractor={(item, index) => index.toString()}
         data={projects}
