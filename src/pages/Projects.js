@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {fakeStorage} from '../fakeStorage';
 import {project_style} from '../styles/components_styles';
+import {theme} from '../styles/theme';
 import {CircleCount, Loading, SmallButton, ProjectCard} from '../components';
 
 function Projects(props) {
@@ -37,17 +38,17 @@ function Projects(props) {
       <ProjectCard
         item={item}
         onSelect={() => {
-          props.navigation.navigate('ProjectDetails', item);
+          props.navigation.navigate('ProjectDetails', item['id']);
         }}
       />
     );
   }
 
   return (
-    <SafeAreaView style={{backgroundColor: '#79a3b1', flex: 1}}>
+    <SafeAreaView style={{backgroundColor: theme.PRIMARY_COLOR, flex: 1}}>
       <SmallButton buttonTitle="👋 Logout 👋" onSelect={handleLogoutRequest} />
       <FlatList
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(_, index) => index.toString()}
         data={projects}
         renderItem={renderProject}
         // TODO: Add a cooler empty list component
