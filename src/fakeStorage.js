@@ -33,7 +33,7 @@ let elections = [
     id: 12,
     owner_id: 3234,
     created_date: new Date(2021, 4, 5),
-    time_in_days: 5,
+    time_in_days: 40,
     candidates: [
       {
         info: 'Nothing',
@@ -80,8 +80,8 @@ let elections = [
       'This is an example election. Here I offer a long description borrowed from Lorem ipsum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     id: 13,
     owner_id: 3234,
-    created_date: new Date(2021, 4, 25),
-    time_in_days: 20,
+    created_date: new Date(2021, 4, 20),
+    time_in_days: 8,
     candidates: [
       {
         info: 'John Doe',
@@ -177,7 +177,7 @@ const fakeStorage = {
   },
   fetchUserProjects: userId => {
     const search = idToSearch => {
-      for (var i = 0; i < users.length; i++) {
+      for (let i = 0; i < users.length; i++) {
         if (users[i].id == idToSearch) {
           return users[i];
         }
@@ -196,6 +196,77 @@ const fakeStorage = {
           : reject({code: 'No Projects Found'});
       }, 700);
     });
+  },
+  fetchProject: projectId => {
+    const search = idToSearch => {
+      for (let i = 0; i < elections.length; i++) {
+        if (elections[i].id == idToSearch) {
+          return elections[i];
+        }
+      }
+      return null;
+    };
+    return new Promise(function (resolve, reject) {
+      setTimeout(function () {
+        let election = search(projectId);
+        election ? resolve(election) : reject({code: 'No Projects Found'});
+      }, 300);
+    });
+  },
+  didUserVote: (userId, electionId) => {
+    const search = idToSearch => {
+      for (let i = 0; i < users.length; i++) {
+        if (users[i].id == idToSearch) {
+          return users[i];
+        }
+      }
+      return null;
+    };
+    let user = search(userId);
+    return user['elections'].includes(electionId);
+  },
+  getWinner: electionId => {
+    const search = (list, idToSearch) => {
+      for (let i = 0; i < list.length; i++) {
+        if (list[i].id == idToSearch) {
+          return list[i];
+        }
+      }
+      return null;
+    };
+    let election = search(elections, electionId);
+    if (!election) {
+      return 'NO ONE';
+    }
+    let sortedOptions = {};
+    election['ballots'].forEach((item, _) => {
+      if (!(item['id'] in sortedOptions)) {
+        sortedOptions[item['id']] = 1;
+      } else {
+        sortedOptions[item['id']]++;
+      }
+    });
+    let candidateId = Object.keys(sortedOptions).reduce((a, b) =>
+      sortedOptions[a] > sortedOptions[b] ? a : b,
+    );
+    let candidate = search(election['candidates'], candidateId);
+    return candidate['info'];
+  },
+  addBallot: (electionId, candidateId) => {
+    for (let i = 0; i < elections.length; i++) {
+      if (elections[i].id == electionId) {
+        elections[i]['ballots'].push({
+          candidate_id: candidateId,
+          id: elections[i]['ballots'].length,
+          owner_id: global.loggedIn,
+        });
+        for (let j = 0; j < users.length; j++) {
+          if (users[j].id == global.loggedIn) {
+            users[j]['elections'].push(electionId);
+          }
+        }
+      }
+    }
   },
 };
 

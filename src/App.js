@@ -34,8 +34,8 @@ function MainStack() {
         tabBarLabel: () => null,
       })}>
       <Tab.Screen name="ProjectsStack" component={ProjectsStack} />
-      <Tab.Screen name="Voted" component={VotedProjects} />
       <Tab.Screen name="Finished" component={FinishedElections} />
+      <Tab.Screen name="Voted" component={VotedProjects} />
     </Tab.Navigator>
   );
 }
@@ -58,15 +58,15 @@ function generateIcon(focused, color, route) {
   let iconName;
   switch (route.name) {
     case 'ProjectsStack':
-      iconName = 'home';
+      iconName = 'poll';
       color = focused ? theme.PRIMARY_COLOR : 'grey';
       break;
     case 'Voted':
-      iconName = 'tasks';
+      iconName = 'vote-yea';
       color = focused ? theme.PRIMARY_COLOR : 'grey';
       break;
     case 'Finished':
-      iconName = 'check-square';
+      iconName = 'flag-checkered';
       color = focused ? theme.PRIMARY_COLOR : 'grey';
       break;
     default:
@@ -78,7 +78,7 @@ function generateIcon(focused, color, route) {
         name={iconName}
         color={color}
         size={30}
-        solid></FontAwesome5>
+        solid/>
     );
   }
   return (
