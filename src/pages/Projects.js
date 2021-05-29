@@ -24,7 +24,6 @@ function Projects(props) {
         setProjects(serverResponse);
       })
       .catch(serverError => {
-        console.log('error fetching projects');
       });
   }, []);
 

@@ -23,9 +23,7 @@ function FinishedElections(props) {
       .then(serverResponse => {
         setProjects(serverResponse);
       })
-      .catch(serverError => {
-        console.log('error fetching projects');
-      });
+      .catch(serverError => {});
   }, []);
 
   const handleLogoutRequest = () => {

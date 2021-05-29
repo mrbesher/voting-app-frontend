@@ -30,13 +30,10 @@ function ProjectDetails(props) {
         setOptions(serverResponse.candidates);
       })
       .catch(serverError => {
-        console.log('error fetching projects');
       });
   }, []);
 
   const moveOption = (offset, index) => {
-    console.log('OPTIONS');
-    console.log(options);
     if (index + offset >= options.length || index + offset < 0) {
       return;
     }
@@ -44,7 +41,6 @@ function ProjectDetails(props) {
     const b = list[index];
     list[index] = list[index + offset];
     list[index + offset] = b;
-    console.log(list);
     setOptions(list);
     setRefresh(!refresh);
   };
@@ -112,7 +108,11 @@ function ProjectDetails(props) {
     ) {
       return (
         <View style={{flex: 1, alignItems: 'center'}}>
-          <Text style={{color: theme.PRIMARY_COLOR, fontSize: theme.FONT_SIZE_LARGE}}>
+          <Text
+            style={{
+              color: theme.PRIMARY_COLOR,
+              fontSize: theme.FONT_SIZE_LARGE,
+            }}>
             THE ELECTION WINNER IS:
           </Text>
           <Text>{fakeStorage.getWinner(project['id'])}</Text>
@@ -141,7 +141,11 @@ function ProjectDetails(props) {
             // TODO: Add a cooler empty list component
             ListEmptyComponent={<Loading invert={1} />}
           />
-          <SmallButton buttonTitle="Vote 🗳️" invert={true} onSelect={handleVotingRequest}/>
+          <SmallButton
+            buttonTitle="Vote 🗳️"
+            invert={true}
+            onSelect={handleVotingRequest}
+          />
         </View>
       );
     }

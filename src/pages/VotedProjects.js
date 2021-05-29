@@ -24,7 +24,6 @@ function VotedProjects({navigation}) {
         setProjects(serverResponse);
       })
       .catch(serverError => {
-        console.log('error');
       });
   }, []);
 
